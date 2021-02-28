@@ -30,8 +30,3 @@ Look into `Environment variables` block in the bottom.
 | ALLOWED_ORIGINS            | Origins to allow requests from  (separated by space) | http://localhost |
 | API_PORT                   | Port                                                 | 80               |
 | SENTRY_DSN                 | DSN for the Sentry                                   | -                |
-| POSTGRES_USER              | Username for DB connection                           | postgres         |
-| POSTGRES_PASSWORD          | Password for DB connection                           | ""               |
-| POSTGRES_HOSTNAME          | Hostname for DB connection                           | localhost        |
-| POSTGRES_PORT              | Port for DB connection                               | 5432             |
-| POSTGRES_DB                | DB name for DB connection                            | postgres         |

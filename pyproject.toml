@@ -12,6 +12,11 @@ uvicorn = "^0.13.3"
 python-json-logger = "^2.0.1"
 sentry-sdk = "^0.19.5"
 httpx = "^0.16.1"
+prometheus-client = "^0.9.0"
+funcy = "^1.15"
+gunicorn = "^20.0.4"
+uvloop = "^0.15.2"
+httptools = "^0.1.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.8.4"

@@ -40,5 +40,6 @@ WORKDIR /app
 COPY binance_market_trends/ ./binance_market_trends
 COPY server.py/ ./server.py
 COPY docker-entrypoint.sh/ ./entrypoint.sh
+COPY gunicorn-conf.py/ ./gunicorn-conf.py
 
 CMD ["sh", "entrypoint.sh"]

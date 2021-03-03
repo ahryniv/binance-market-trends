@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - /Users/zakko13/Documents/projects/binance_market_trends/prometheus-config.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"

@@ -54,5 +54,5 @@ LOG_CONFIG = {
         'gunicorn.access': {'handlers': ['gunicorn_uvicorn'], 'level': log_level},
         'gunicorn.error': {'handlers': ['gunicorn_uvicorn'], 'level': log_level},
     },
-    'root': {'handlers': ['default'], 'level': log_level}
+    'root': {'handlers': [], 'level': log_level}
 }

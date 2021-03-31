@@ -19,9 +19,8 @@ class MetricsService:
     """Service managing Prometheus metrics"""
 
     async def update_metrics(self) -> None:
-        """Update metrics
-        TODO: run concurently
-        """
+        """Update metrics"""
+        # TODO: run concurrently
         await self.update_binance_metrics()
         await self.update_reddit_metrics()
 

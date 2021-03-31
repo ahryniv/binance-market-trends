@@ -30,4 +30,4 @@ class BaseScraper(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     async def scrape(self):
         """Do the needed scraping work with set timeout"""
-        raise NotImplemented
+        raise NotImplementedError

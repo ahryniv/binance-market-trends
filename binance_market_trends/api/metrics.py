@@ -1,9 +1,7 @@
-from datetime import timedelta
-
-from fastapi import APIRouter, Request, Response
+from fastapi import APIRouter, Response
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
-from binance_market_trends.services import MetricsService, RedditService
+from binance_market_trends.services import MetricsService
 
 router = APIRouter()
 
@@ -26,11 +24,5 @@ async def metrics() -> Response:
     '/test',
     summary='Test',
 )
-async def test(request: Request):
+async def test():
     """Make Some test"""
-    app = request.app
-
-    metric = app.state.metrics[PrometheusMetric.BINANCE_GROWING_SYMBOLS_TOTAL]
-
-    # posts_count = await RedditService.get_last_posts_count(last=timedelta(minutes=5))
-    # posts_count

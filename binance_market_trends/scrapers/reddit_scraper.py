@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime, timedelta, timezone
 from time import time
-from typing import List, Dict, Any, TypedDict
+from typing import Dict, Any
 
 from binance_market_trends.clients import reddit_client
 from binance_market_trends.database.models import RedditPost

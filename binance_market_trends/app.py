@@ -45,3 +45,6 @@ def create_app(app_settings: Settings = None):
     app.include_router(binance_market_trends_base.router, tags=['Binance Market Trends'])
     app.include_router(metrics.router, tags=['Prometheus Metrics'])
     return app
+
+
+# TODO: mypy

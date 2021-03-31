@@ -1,6 +1,4 @@
-from prometheus_client import Gauge
-
-from binance_market_trends.conf.constants import PrometheusMetric
+from binance_market_trends.database.db import init_db, disconnect_db
 from binance_market_trends.middlewares import catch_exceptions_middleware
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -20,32 +18,6 @@ def _init_middlewares(app: FastAPI, app_settings: Settings):
                        allow_headers=["*"])
 
 
-def _set_prometheus_metrics(app: FastAPI) -> None:
-    """Set Prometheus Metrics"""
-    app.state.metrics = {
-        PrometheusMetric.BINANCE_BTC_TRADES: Gauge(
-            PrometheusMetric.BINANCE_BTC_TRADES.lower(),
-            'BTC Trades (FAKE)',
-        ),
-        PrometheusMetric.BINANCE_GROWING_SYMBOLS_USDT_TOTAL: Gauge(
-            PrometheusMetric.BINANCE_GROWING_SYMBOLS_USDT_TOTAL.lower(),
-            'Growing symbols to USDT in Binance market total',
-        ),
-        PrometheusMetric.BINANCE_FALLING_SYMBOLS_USDT_TOTAL: Gauge(
-            PrometheusMetric.BINANCE_FALLING_SYMBOLS_USDT_TOTAL.lower(),
-            'Falling symbols to USDT in Binance market total',
-        ),
-        PrometheusMetric.BINANCE_GROWING_SYMBOLS_USDT_PERCENT: Gauge(
-            PrometheusMetric.BINANCE_GROWING_SYMBOLS_USDT_PERCENT.lower(),
-            'Percent of Growing symbols to USDT in Binance market',
-        ),
-        PrometheusMetric.BINANCE_SAME_PRICE_SYMBOLS_USDT_TOTAL: Gauge(
-            PrometheusMetric.BINANCE_SAME_PRICE_SYMBOLS_USDT_TOTAL.lower(),
-            'Symbols with same price to USDT in Binance market total',
-        ),
-    }
-
-
 def create_app(app_settings: Settings = None):
     app_settings = app_settings if app_settings is not None else settings
     init_sentry(app_settings, version=__version__)
@@ -61,9 +33,13 @@ def create_app(app_settings: Settings = None):
     _init_middlewares(app, app_settings)
 
     @app.on_event('startup')
-    def startup() -> None:
+    async def startup() -> None:
         """Startup events"""
-        _set_prometheus_metrics(app)
+        await init_db()
+
+    @app.on_event('shutdown')
+    async def shutdown():
+        await disconnect_db()
 
     # routes
     app.include_router(binance_market_trends_base.router, tags=['Binance Market Trends'])

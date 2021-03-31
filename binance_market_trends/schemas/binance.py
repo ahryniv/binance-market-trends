@@ -26,4 +26,3 @@ class Symbol24PriceSchema(BaseModel):
     first_id: int = Field(..., alias='firstId')
     last_id: int = Field(..., alias='lastId')
     count: int
-

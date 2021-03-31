@@ -1,11 +1,9 @@
-from random import randint
+from datetime import timedelta
 
 from fastapi import APIRouter, Request, Response
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
-from binance_market_trends.clients import binance_client
-from binance_market_trends.conf.constants import PrometheusMetric
-from binance_market_trends.services.metrics_service import MetricsService
+from binance_market_trends.services import MetricsService, RedditService
 
 router = APIRouter()
 
@@ -14,15 +12,9 @@ router = APIRouter()
     '/metrics',
     summary='Prometheus Metrics'
 )
-async def metrics(request: Request) -> Response:
+async def metrics() -> Response:
     """Endpoint for the Prometheus server with metrics"""
-    app = request.app
-    prices_change = await MetricsService().prices_change()
-    app.state.metrics[PrometheusMetric.BINANCE_BTC_TRADES].set(randint(1, 100))
-    app.state.metrics[PrometheusMetric.BINANCE_GROWING_SYMBOLS_USDT_TOTAL].set(prices_change.growing)
-    app.state.metrics[PrometheusMetric.BINANCE_FALLING_SYMBOLS_USDT_TOTAL].set(prices_change.falling)
-    app.state.metrics[PrometheusMetric.BINANCE_GROWING_SYMBOLS_USDT_PERCENT].set(prices_change.growing_percent)
-    app.state.metrics[PrometheusMetric.BINANCE_SAME_PRICE_SYMBOLS_USDT_TOTAL].set(prices_change.same_price)
+    await MetricsService().update_metrics()
     data = generate_latest()
     return Response(
         content=data,
@@ -34,7 +26,11 @@ async def metrics(request: Request) -> Response:
     '/test',
     summary='Test',
 )
-async def test():
+async def test(request: Request):
     """Make Some test"""
-    response = await MetricsService().prices_change()
-    response
+    app = request.app
+
+    metric = app.state.metrics[PrometheusMetric.BINANCE_GROWING_SYMBOLS_TOTAL]
+
+    # posts_count = await RedditService.get_last_posts_count(last=timedelta(minutes=5))
+    # posts_count

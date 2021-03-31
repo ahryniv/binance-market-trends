@@ -2,8 +2,6 @@ import logging
 from datetime import timedelta, datetime, timezone
 from typing import List
 
-import funcy
-
 from binance_market_trends.clients import BaseHTTPClient
 from binance_market_trends.exceptions import BinanceClientException
 from binance_market_trends.schemas.binance import Symbol24PriceSchema
@@ -24,7 +22,7 @@ class BinanceClient(BaseHTTPClient):
         self.ticker_24_hr_last_request = None
         self.ticker_24_hr_timeout = timedelta(minutes=1)
 
-    # TODO: refactor with cache
+    # TODO: refactor with smart throttling and cache
     async def ticker_24_hr(self) -> List[Symbol24PriceSchema]:
         """24 hour rolling window price change statistics
         Weight: 1 for a single symbol;

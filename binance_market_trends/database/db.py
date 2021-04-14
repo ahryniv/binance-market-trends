@@ -6,7 +6,7 @@ from binance_market_trends.conf.settings import settings
 db = gino.Gino()
 
 
-async def init_db():
+async def connect_db():
     engine = await sqlalchemy.create_engine(settings.sqlalchemy_database_uri, strategy='gino')
     db.bind = engine
 

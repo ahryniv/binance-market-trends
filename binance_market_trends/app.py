@@ -1,4 +1,4 @@
-from binance_market_trends.database.db import init_db, disconnect_db
+from binance_market_trends.database.db import connect_db, disconnect_db
 from binance_market_trends.middlewares import catch_exceptions_middleware
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -35,7 +35,7 @@ def create_app(app_settings: Settings = None):
     @app.on_event('startup')
     async def startup() -> None:
         """Startup events"""
-        await init_db()
+        await connect_db()
 
     @app.on_event('shutdown')
     async def shutdown():

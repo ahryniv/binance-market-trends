@@ -13,7 +13,7 @@ class PrometheusMetric(str, Enum):
 
 REDDIT_POSTS_METRIC_TIME = 15
 BINANCE_BASE_ASSETS = ['BUSD', 'USDT', 'BTC']
-REDDIT_METRICS_KEYWORDS = ['btc', 'cryptocurrency', 'bitcoin', 'crypto']
+REDDIT_METRICS_KEYWORDS = ['btc', 'cryptocurrency', 'bitcoin', 'crypto', 'doge', 'dogecoin']
 
 
 BINANCE_GROWING_PAIRS_TOTAL = Gauge(

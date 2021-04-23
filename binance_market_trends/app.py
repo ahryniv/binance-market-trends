@@ -39,6 +39,7 @@ def create_app(app_settings: Settings = None):
 
     @app.on_event('shutdown')
     async def shutdown():
+        """Shutdown events"""
         await disconnect_db()
 
     # routes

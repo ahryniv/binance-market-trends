@@ -2,9 +2,9 @@ version: "3"
 
 services:
   prometheus:
-    image: prom/prometheus
-    volumes:
-      - /Users/zakko13/Documents/projects/binance_market_trends/prometheus-config.yml:/etc/prometheus/prometheus.yml
+    build:
+      context: .
+      dockerfile: Dockerfile-prometheus
     ports:
       - "9090:9090"
 

@@ -117,6 +117,46 @@
       }
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                60
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "B",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "0m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "There are a lot of falling pairs!!!",
+        "name": "Falling pairs total",
+        "noDataState": "alerting",
+        "notifications": [
+          {
+            "uid": "5sXtzdrGz"
+          }
+        ]
+      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -162,11 +202,28 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg by (asset) (binance_falling_pairs_total)",
+          "exemplar": true,
+          "expr": "binance_falling_pairs_total{asset=\"USDT\"}",
           "instant": false,
           "interval": "",
-          "legendFormat": "{{asset}}",
+          "legendFormat": "USDT",
           "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "binance_falling_pairs_total{asset=\"BUSD\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "BUSD",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "binance_falling_pairs_total{asset=\"BTC\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "BTC",
+          "refId": "C"
         }
       ],
       "thresholds": [
@@ -175,7 +232,8 @@
           "fill": true,
           "line": true,
           "op": "gt",
-          "yaxis": "left"
+          "value": 60,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -352,6 +410,7 @@
         "y": 8
       },
       "id": 8,
+      "maxDataPoints": null,
       "options": {
         "orientation": "auto",
         "reduceOptions": {
@@ -369,7 +428,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "binance_growing_pairs_percent{asset='BTC'}",
+          "expr": " binance_growing_pairs_percent{asset='BTC'}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -378,9 +437,10 @@
           "refId": "A"
         },
         {
-          "exemplar": false,
+          "exemplar": true,
           "expr": "binance_growing_pairs_percent{asset='USDT'}",
           "hide": false,
+          "instant": true,
           "interval": "",
           "legendFormat": "Percent of growing USDT pairs",
           "refId": "B"
@@ -389,6 +449,7 @@
           "exemplar": true,
           "expr": "binance_growing_pairs_percent{asset='BUSD'}",
           "hide": false,
+          "instant": true,
           "interval": "",
           "legendFormat": "Percent of growing BUSD pairs",
           "refId": "C"
@@ -502,7 +563,7 @@
     "list": []
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -521,5 +582,5 @@
   "timezone": "",
   "title": "Main2",
   "uid": "TIZLpQyGz",
-  "version": 2
+  "version": 22
 }

@@ -20,7 +20,7 @@ class MetricsService:
 
     async def update_metrics(self) -> None:
         """Update metrics"""
-        # TODO: run concurrently
+        # TODO: run concurrently with asyncio.gather
         await self.update_binance_metrics()
         await self.update_reddit_metrics()
 

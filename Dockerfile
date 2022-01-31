@@ -39,6 +39,11 @@ WORKDIR /app
 
 COPY binance_market_trends/ ./binance_market_trends
 COPY server.py/ ./server.py
-COPY docker-entrypoint.sh/ ./entrypoint.sh
+COPY run_scrapers.py/ ./run_scrapers.py
+COPY server-entrypoint.sh/ ./server-entrypoint.sh
+COPY scraper-entrypoint.sh/ ./scraper-entrypoint.sh
+COPY gunicorn-conf.py/ ./gunicorn-conf.py
+COPY alembic.ini/ ./alembic.ini
+COPY migrate_db.py/ ./migrate_db.py
 
-CMD ["sh", "entrypoint.sh"]
+CMD ["sh", "server-entrypoint.sh"]

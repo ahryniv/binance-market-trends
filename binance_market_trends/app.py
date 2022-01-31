@@ -1,9 +1,10 @@
+from binance_market_trends.database.db import connect_db, disconnect_db
 from binance_market_trends.middlewares import catch_exceptions_middleware
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from binance_market_trends import __version__
-from binance_market_trends.api import binance_market_trends_base
+from binance_market_trends.api import binance_market_trends_base, metrics
 from binance_market_trends.conf.sentry import init_sentry
 from binance_market_trends.conf.settings import settings, Env, Settings
 
@@ -31,6 +32,20 @@ def create_app(app_settings: Settings = None):
     )
     _init_middlewares(app, app_settings)
 
+    @app.on_event('startup')
+    async def startup() -> None:
+        """Startup events"""
+        await connect_db()
+
+    @app.on_event('shutdown')
+    async def shutdown():
+        """Shutdown events"""
+        await disconnect_db()
+
     # routes
     app.include_router(binance_market_trends_base.router, tags=['Binance Market Trends'])
+    app.include_router(metrics.router, tags=['Prometheus Metrics'])
     return app
+
+
+# TODO: mypy

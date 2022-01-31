@@ -20,3 +20,11 @@ class HTTPClientException(Exception):
 
     def __repr__(self) -> str:
         return f'<{self.__class__.__name__} status_code={self.status_code}>'
+
+
+class BinanceClientException(HTTPClientException):
+    pass
+
+
+class RedditClientException(HTTPClientException):
+    pass
